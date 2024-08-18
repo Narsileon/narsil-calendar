@@ -1,18 +1,18 @@
 import "@narsil-calendar/../css/app.scss";
 import { CalendarOptions, DatesSetArg } from "@fullcalendar/core";
 import { forwardRef } from "react";
+import { useLocalStorage } from "react-use";
 import { usePage } from "@inertiajs/react";
+import * as React from "react";
 import allLocales from "@fullcalendar/core/locales-all";
 import Calendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
-import moment from "moment";
 import rrulePlugin from "@fullcalendar/rrule";
+import ScrollArea from "@narsil-ui/Components/ScrollArea/ScrollArea";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import useScreenStore from "@narsil-ui/Stores/screenStore";
-import ScrollArea from "@narsil-ui/Components/ScrollArea/ScrollArea";
-import * as React from "react";
 
 export interface FullCalendarProps extends CalendarOptions {}
 
@@ -21,9 +21,10 @@ const FullCalendar = forwardRef<Calendar, FullCalendarProps>(({ views, select, .
 
 	const locale = usePage<GlobalProps>().props.shared.localization.locale;
 
-	const [width, setWidth] = React.useState("100%");
+	const [date, setDate] = useLocalStorage(`app:calendar:date`, new Date().toISOString());
+	const [view, setView] = useLocalStorage(`app:calendar:view`, isMobile ? "listMonth" : "timeGridWeek");
 
-	const LOCAL_STORAGE_FULL_CALENDAR_DEFAULT_VIEW = "fullCalendarDefaultView";
+	const [width, setWidth] = React.useState("100%");
 
 	const getWidth = (view: string) => {
 		if (isMobile) {
@@ -37,8 +38,8 @@ const FullCalendar = forwardRef<Calendar, FullCalendarProps>(({ views, select, .
 
 	const datesSet = (arg: DatesSetArg) => {
 		setWidth(getWidth(arg.view.type));
-		console.log(arg.view.type);
-		localStorage.setItem(LOCAL_STORAGE_FULL_CALENDAR_DEFAULT_VIEW, arg.view.calendar.getDate().toISOString());
+
+		setDate(arg.view.calendar.getDate().toISOString());
 	};
 
 	const plugins = [dayGridPlugin, interactionPlugin, listPlugin, rrulePlugin, timeGridPlugin];
@@ -70,19 +71,14 @@ const FullCalendar = forwardRef<Calendar, FullCalendarProps>(({ views, select, .
 					firstDay={1}
 					headerToolbar={false}
 					height='100%'
-					initialDate={
-						localStorage.getItem(LOCAL_STORAGE_FULL_CALENDAR_DEFAULT_VIEW) !== null
-							? localStorage.getItem(LOCAL_STORAGE_FULL_CALENDAR_DEFAULT_VIEW)
-							: moment().toDate()
-					}
-					initialView='timeGridWeek'
+					initialDate={date}
+					initialView={view}
 					locale={locale}
 					locales={allLocales}
 					longPressDelay={500}
 					nowIndicator={true}
 					plugins={plugins}
 					progressiveEventRendering={true}
-					schedulerLicenseKey='CC-Attribution-NonCommercial-NoDerivatives'
 					scrollTime='08:00'
 					scrollTimeReset={true}
 					slotMinTime='00:00'
@@ -118,7 +114,6 @@ const FullCalendar = forwardRef<Calendar, FullCalendarProps>(({ views, select, .
 						},
 						timeGrid: {
 							slotLabelFormat: {
-								days: 1,
 								hour: "2-digit",
 								minute: "2-digit",
 								hour12: locale == "en" ? true : false,
