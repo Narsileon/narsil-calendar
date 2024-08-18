@@ -1,0 +1,15 @@
+{
+	"dayGrid": "Kalender",
+	"dayGridDay": "Tageskalender",
+	"dayGridWeek": "Wochenkalender",
+	"dayGridMonth": "Monatskalender",
+	"list": "Liste",
+	"listDay": "Tagesliste",
+	"listWeek": "Wöchentliche Liste",
+	"listMonth": "Monatliche Liste",
+	"listYear": "Jahresliste",
+	"timeGrid": "Plan",
+	"timeGridDay": "Tagesplan",
+	"timeGridWeek": "Wochenplan",
+	"Today": "Heute"
+}
