@@ -2,10 +2,16 @@ import { useLocalStorage } from "react-use";
 import { useTranslationsStore } from "@narsil-localization/Stores/translationStore";
 import * as React from "react";
 import Calendar from "@fullcalendar/react";
-import Combobox, { ComboboxProps } from "@narsil-ui/Components/Combobox/Combobox";
+import Select from "@narsil-ui/Components/Select/Select";
+import SelectContent from "@narsil-ui/Components/Select/SelectContent";
+import SelectGroup from "@narsil-ui/Components/Select/SelectGroup";
+import SelectItem from "@narsil-ui/Components/Select/SelectItem";
+import SelectLabel from "@narsil-ui/Components/Select/SelectLabel";
+import SelectTrigger, { SelectTriggerProps } from "@narsil-ui/Components/Select/SelectTrigger";
+import SelectValue from "@narsil-ui/Components/Select/SelectValue";
 import useScreenStore from "@narsil-ui/Stores/screenStore";
 
-export interface FullCalendarViewProps extends Partial<ComboboxProps> {
+export interface FullCalendarViewProps extends Partial<SelectTriggerProps> {
 	calendar: React.MutableRefObject<Calendar>;
 }
 
@@ -19,27 +25,35 @@ const FullCalendarView = ({ calendar, ...props }: FullCalendarViewProps) => {
 	const { isMobile } = useScreenStore();
 	const { trans } = useTranslationsStore();
 
-	const viewOptions = Object.entries(views).map(([view, subviews]) => ({
-		label: trans(view),
-		options: subviews.map((subview) => ({
-			label: trans(subview),
-			value: subview,
-		})),
-	}));
-
 	const [view, setView] = useLocalStorage(`app:calendar:view`, isMobile ? "listMonth" : "timeGridWeek");
 
 	return (
-		<Combobox
-			value={view ?? ""}
-			onChange={(value) => {
+		<Select
+			onValueChange={(value) => {
 				setView(value as string);
 
 				calendar?.current?.getApi().changeView(value as string);
 			}}
-			options={viewOptions}
-			{...props}
-		/>
+		>
+			<SelectTrigger {...props}>
+				<SelectValue>{trans(view ?? "")}</SelectValue>
+			</SelectTrigger>
+			<SelectContent>
+				{Object.entries(views).map(([view, subviews]) => (
+					<SelectGroup key={view}>
+						<SelectLabel>{trans(view)}</SelectLabel>
+						{subviews.map((subview) => (
+							<SelectItem
+								value={subview}
+								key={subview}
+							>
+								{trans(subview)}
+							</SelectItem>
+						))}
+					</SelectGroup>
+				))}
+			</SelectContent>
+		</Select>
 	);
 };
 
