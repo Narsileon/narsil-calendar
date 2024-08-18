@@ -19,6 +19,7 @@ const FullCalendarNavigation = React.forwardRef<HTMLDivElement, FullCalendarNavi
 				className={cn("flex items-center", className)}
 			>
 				<Button
+					className='rounded-r-none border-r'
 					size='icon'
 					onClick={() => {
 						calendar?.current?.getApi().prev();
@@ -27,6 +28,7 @@ const FullCalendarNavigation = React.forwardRef<HTMLDivElement, FullCalendarNavi
 					<ChevronLeft />
 				</Button>
 				<Button
+					className='rounded-l-none rounded-r-none border-x'
 					onClick={() => {
 						calendar?.current?.getApi().today();
 					}}
@@ -34,6 +36,7 @@ const FullCalendarNavigation = React.forwardRef<HTMLDivElement, FullCalendarNavi
 					{trans("Today")}
 				</Button>
 				<Button
+					className='rounded-l-none border-l'
 					size='icon'
 					onClick={() => {
 						calendar?.current?.getApi().next();

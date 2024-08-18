@@ -1,20 +1,20 @@
+import { useFullCalendar } from "./FullCalendarProvider";
 import * as React from "react";
-import Calendar from "@fullcalendar/react";
 import SectionTitle, { SectionTitleProps } from "@narsil-ui/Components/Section/SectionTitle";
 
-export interface FullCalendarTitleProps extends SectionTitleProps {
-	calendar: React.MutableRefObject<Calendar>;
-}
+export interface FullCalendarTitleProps extends SectionTitleProps {}
 
-const FullCalendarTitle = React.forwardRef<HTMLHeadingElement, FullCalendarTitleProps>(
-	({ calendar, ...props }, ref) => (
+const FullCalendarTitle = React.forwardRef<HTMLHeadingElement, FullCalendarTitleProps>(({ ...props }, ref) => {
+	const { title } = useFullCalendar();
+
+	return (
 		<SectionTitle
 			ref={ref}
 			{...props}
 		>
-			{calendar?.current?.getApi().view.title}
+			{title}
 		</SectionTitle>
-	)
-);
+	);
+});
 
 export default FullCalendarTitle;

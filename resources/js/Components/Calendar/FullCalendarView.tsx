@@ -1,4 +1,4 @@
-import { useLocalStorage } from "react-use";
+import { useFullCalendar } from "./FullCalendarProvider";
 import { useTranslationsStore } from "@narsil-localization/Stores/translationStore";
 import * as React from "react";
 import Calendar from "@fullcalendar/react";
@@ -9,7 +9,6 @@ import SelectItem from "@narsil-ui/Components/Select/SelectItem";
 import SelectLabel from "@narsil-ui/Components/Select/SelectLabel";
 import SelectTrigger, { SelectTriggerProps } from "@narsil-ui/Components/Select/SelectTrigger";
 import SelectValue from "@narsil-ui/Components/Select/SelectValue";
-import useScreenStore from "@narsil-ui/Stores/screenStore";
 
 export interface FullCalendarViewProps extends Partial<SelectTriggerProps> {
 	calendar: React.MutableRefObject<Calendar>;
@@ -22,10 +21,9 @@ const views = {
 };
 
 const FullCalendarView = ({ calendar, ...props }: FullCalendarViewProps) => {
-	const { isMobile } = useScreenStore();
 	const { trans } = useTranslationsStore();
 
-	const [view, setView] = useLocalStorage(`app:calendar:view`, isMobile ? "listMonth" : "timeGridWeek");
+	const { view, setView } = useFullCalendar();
 
 	return (
 		<Select
@@ -36,7 +34,7 @@ const FullCalendarView = ({ calendar, ...props }: FullCalendarViewProps) => {
 			}}
 		>
 			<SelectTrigger {...props}>
-				<SelectValue>{trans(view ?? "")}</SelectValue>
+				<SelectValue>{trans(view)}</SelectValue>
 			</SelectTrigger>
 			<SelectContent>
 				{Object.entries(views).map(([view, subviews]) => (

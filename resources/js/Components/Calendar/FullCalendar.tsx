@@ -1,8 +1,8 @@
 import "@narsil-calendar/../css/app.scss";
 import { CalendarOptions, DatesSetArg } from "@fullcalendar/core";
 import { forwardRef } from "react";
-import { useLocalStorage } from "react-use";
-import { usePage } from "@inertiajs/react";
+import { useFullCalendar } from "./FullCalendarProvider";
+import { useTranslationsStore } from "@narsil-localization/Stores/translationStore";
 import * as React from "react";
 import allLocales from "@fullcalendar/core/locales-all";
 import Calendar from "@fullcalendar/react";
@@ -17,12 +17,9 @@ import useScreenStore from "@narsil-ui/Stores/screenStore";
 export interface FullCalendarProps extends CalendarOptions {}
 
 const FullCalendar = forwardRef<Calendar, FullCalendarProps>(({ views, select, ...props }, ref) => {
+	const { date, view, setDate, setTitle } = useFullCalendar();
 	const { isMobile } = useScreenStore();
-
-	const locale = usePage<GlobalProps>().props.shared.localization.locale;
-
-	const [date, setDate] = useLocalStorage(`app:calendar:date`, new Date().toISOString());
-	const [view, setView] = useLocalStorage(`app:calendar:view`, isMobile ? "listMonth" : "timeGridWeek");
+	const { locale } = useTranslationsStore();
 
 	const [width, setWidth] = React.useState("100%");
 
@@ -37,9 +34,11 @@ const FullCalendar = forwardRef<Calendar, FullCalendarProps>(({ views, select, .
 	};
 
 	const datesSet = (arg: DatesSetArg) => {
-		setWidth(getWidth(arg.view.type));
+		const width = getWidth(arg.view.type);
 
 		setDate(arg.view.calendar.getDate().toISOString());
+		setWidth(width);
+		setTitle(arg.view.title);
 	};
 
 	const plugins = [dayGridPlugin, interactionPlugin, listPlugin, rrulePlugin, timeGridPlugin];
