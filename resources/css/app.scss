@@ -1,0 +1,58 @@
+:root {
+	--fc-border-color: hsl(var(--border));
+	--fc-event-bg-color: hsl(var(--card));
+	--fc-event-border-color: hsl(var(--border));
+	--fc-neutral-bg-color: hsl(var(--card));
+	--fc-now-indicator-color: hsl(var(--primary));
+	--fc-page-bg-color: hsl(var(--card));
+}
+
+.fc-bg-event {
+	opacity: 100;
+}
+
+.fc-day,
+.fc-list-day-cushion,
+.fc-list-event {
+	&:hover {
+		background: hsl(var(--muted) / 0.5);
+	}
+}
+
+.fc-timegrid-slots {
+	tr {
+		&:hover {
+			background: hsl(var(--muted) / 0.5);
+		}
+	}
+}
+
+.fc-day-today {
+	background-color: hsl(var(--secondary) / 0.5) !important;
+}
+
+.fc-non-business {
+	background: hsl(var(--muted, 0.25));
+}
+
+.fc-list,
+.fc-scrollgrid,
+.fc-scrollgrid-section-liquid > td {
+	border: none !important;
+}
+
+.fc-scrollgrid-section > * {
+	border-right: none !important;
+}
+
+.fc-timegrid-axis-cushion {
+	max-width: unset !important;
+}
+
+.fc-timegrid-divider {
+	padding: 0px !important;
+}
+
+.fc-view {
+	background-color: hsl(var(--card));
+}
