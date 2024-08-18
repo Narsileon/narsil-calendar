@@ -27,6 +27,7 @@ const FullCalendarView = ({ calendar, ...props }: FullCalendarViewProps) => {
 
 	return (
 		<Select
+			value={view}
 			onValueChange={(value) => {
 				setView(value as string);
 
