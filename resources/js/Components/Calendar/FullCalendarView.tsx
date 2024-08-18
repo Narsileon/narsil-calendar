@@ -1,12 +1,12 @@
 import { useLocalStorage } from "react-use";
 import { useTranslationsStore } from "@narsil-localization/Stores/translationStore";
 import * as React from "react";
+import Calendar from "@fullcalendar/react";
 import Combobox, { ComboboxProps } from "@narsil-ui/Components/Combobox/Combobox";
-import FullCalendar from "@fullcalendar/react";
 import useScreenStore from "@narsil-ui/Stores/screenStore";
 
-export interface CalendarViewProps extends Partial<ComboboxProps> {
-	calendar: React.MutableRefObject<FullCalendar>;
+export interface FullCalendarViewProps extends Partial<ComboboxProps> {
+	calendar: React.MutableRefObject<Calendar>;
 }
 
 const views = {
@@ -15,7 +15,7 @@ const views = {
 	list: ["listDay", "listWeek", "listMonth", "listYear"],
 };
 
-const CalendarView = ({ calendar, ...props }: CalendarViewProps) => {
+const FullCalendarView = ({ calendar, ...props }: FullCalendarViewProps) => {
 	const { isMobile } = useScreenStore();
 	const { trans } = useTranslationsStore();
 
@@ -43,4 +43,4 @@ const CalendarView = ({ calendar, ...props }: CalendarViewProps) => {
 	);
 };
 
-export default CalendarView;
+export default FullCalendarView;

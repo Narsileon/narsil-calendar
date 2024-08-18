@@ -2,8 +2,8 @@ import { CalendarOptions, DatesSetArg } from "@fullcalendar/core";
 import { forwardRef } from "react";
 import { usePage } from "@inertiajs/react";
 import allLocales from "@fullcalendar/core/locales-all";
+import Calendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import FullCalendar from "@fullcalendar/react";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
 import moment from "moment";
@@ -11,9 +11,9 @@ import rrulePlugin from "@fullcalendar/rrule";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import useScreenStore from "@narsil-ui/Stores/screenStore";
 
-export interface CalendarProps extends CalendarOptions {}
+export interface FullCalendarProps extends CalendarOptions {}
 
-const Calendar = forwardRef<FullCalendar, CalendarProps>(({ views, select, ...props }, ref) => {
+const FullCalendar = forwardRef<Calendar, FullCalendarProps>(({ views, select, ...props }, ref) => {
 	const { isMobile } = useScreenStore();
 
 	const locale = usePage<GlobalProps>().props.shared.localization.locale;
@@ -39,7 +39,7 @@ const Calendar = forwardRef<FullCalendar, CalendarProps>(({ views, select, ...pr
 	const plugins = [dayGridPlugin, interactionPlugin, listPlugin, rrulePlugin, timeGridPlugin];
 
 	return (
-		<FullCalendar
+		<Calendar
 			ref={ref}
 			allDaySlot={true}
 			datesSet={datesSet}
@@ -120,4 +120,4 @@ const Calendar = forwardRef<FullCalendar, CalendarProps>(({ views, select, ...pr
 	);
 });
 
-export default Calendar;
+export default FullCalendar;
