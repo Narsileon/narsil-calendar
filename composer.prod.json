@@ -1,20 +1,4 @@
 {
-	"name": "narsil/calendar",
-	"description": "Narsil calendar",
-	"license": "MIT",
-	"keywords": [
-		"calendar",
-		"inertia",
-		"laravel",
-		"narsil",
-		"php",
-		"react"
-	],
-	"authors": [
-		{
-			"name": "Jonathan Rigaux"
-		}
-	],
 	"repositories": [
 		{
 			"type": "vcs",
@@ -56,33 +40,5 @@
 			"type": "vcs",
 			"url": "git@github.com:Narsileon/narsil-ui.git"
 		}
-	],
-	"require": {
-		"php": "^8.2",
-		"laravel/framework": "^11.3",
-		"narsil/localization": "dev-main",
-		"narsil/ui": "dev-main"
-	},
-	"require-dev": {
-		"phpunit/phpunit": "^11.0"
-	},
-	"minimum-stability": "dev",
-	"prefer-stable": true,
-	"autoload": {
-		"psr-4": {
-			"Narsil\\Calendar\\": "src/"
-		}
-	},
-	"extra": {
-		"laravel": {
-			"providers": [
-				"Narsil\\Calendar\\NarsilCalendarServiceProvider"
-			]
-		}
-	},
-	"config": {
-		"optimize-autoloader": true,
-		"preferred-install": "dist",
-		"sort-packages": true
-	}
+	]
 }
